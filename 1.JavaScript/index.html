@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //동적 타입
+        /*
+        변수 선언 -> let
+        상수 선언 -> const 
+        var의 유효범위 => 함수 scope
+        let의 유효범위 => 블록 scope
+
+        typeof -> 자료형 반환
+        */
+        let a = "Hello World";
+        let b = true;
+        let e; //undefined -> 에러가 아니고 자료형임
+        const PI = 3.14;
+        console.log("상수 PI: " + PI);
+        console.log("PI의 자료형: " + typeof PI); //number
+
+        (function () {
+            console.log(a1); // undefined
+        })();
+
+        var a1 = "나는 var";
+
+        (function () {
+            console.log(a1);
+        })();
+
+        {
+            var a2 = 0;
+            console.log("block 안: " + a2);
+        }
+
+        console.log("block 밖: " + a2); // var의 경우는 함수 scope이므로 block에서는 scope의 의미를 가지지 않음
+
+        console.log("\n\n----------Symbol----------");
+
+        //ES6부터 추가된 Symbol 자료형 => 만들어진 Symbol 각각은 고유한 것임
+        /*
+        c와 d의 Mark는 다른 'Mark'임
+        */
+        const symbol1 = Symbol();
+        const symbol2 = Symbol(37);
+        const symbol3 = Symbol('Mark');
+        const symbol4 = Symbol('Mark');
+
+        console.log(symbol1, typeof symbol1);
+        console.log(symbol3, typeof symbol3);
+        console.log(symbol4, typeof symbol4);
+        console.log(symbol3 == symbol4);
+        console.log(symbol3 === symbol4);
+
+        console.log("\n\n----------호이스팅----------");
+
+        console.log(hoist1); //undefined
+
+        hoist1 = 'mark'
+
+        console.log(hoist1); //Mark
+
+        var hoist1;
+
+        hoist1 = 'Woongjae';
+
+        console.log(hoist1);
+
+        console.log("\n\n----------배열----------");
+
+        let arr = ['안녕', 'Node.js', 55, 'Hello']; //여러 타입이 같이 가능
+        let arr2 = new Array('안녕', 'Node.js', 55, 'Hello');
+        console.log("기본자료형 초기 배열: " + arr);
+        console.log("객체형 배열: " + arr2);
+        arr[4] = 66; //배열에 추가
+        console.log("4번째 원소 추가 후: " + arr);
+        arr[3] = 'Bye'; //배열 값 바꾸기
+        console.log("3번째 원소 수정 후: " + arr);
+        console.log("length: " + arr.length);
+        console.log("55의 인덱스: " + arr.indexOf(55));
+        console.log("\"Node.js\"의 인덱스: " + arr.indexOf('Node.js'));
+
+        console.log("\n\n----------반복문----------");
+        for (let i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
+        }
+
+        /* 
+        while -> 조건문을 보고 반복문 실행
+        do-while -> 반복문 실행 후에 조건문 본다
+        */
+        let i = 0;
+        console.log("while문 시작");
+        while (i < 0) {
+            console.log("콘솔에 찍어주세요");
+            i++;
+        }
+
+        i = 0;
+        console.log("do-while문 시작");
+        do {
+            console.log("콘솔에 찍어주세요");
+        } while (i < 0)
+
+        console.log("\n\n----------함수----------");
+
+        function test(a) {
+            console.log(a);
+        }
+
+        test(10);
+
+        function sum(a, b) {
+            return a + b;
+        }
+
+        console.log(sum(10, 20));
+
+        function print() {
+            return "출력";
+        }
+
+        console.log(print());
+
+        function Car(a, b, c) {
+            this.name = a;
+            this.color = b;
+        }
+
+        let car1 = new Car("현대", "노란");
+        let car2 = new Car("기아", "노란");
+        console.log(car1.name + " 자동차");
+        console.log(car1.color + "색");
+        console.log(car1.move); //undefined
+
+        console.log("\n\n----------프로토타입----------");
+
+        /*
+        자바스크립트는 프로토타입 기반 언어
+        프로토타입은 Java 언어로 치면 클래스
+        */
+        //Car라는 것의 프로토타입을 하나 추가함
+        Car.prototype.move = function () {
+            console.log(this.name + "차이고 " + this.name + "색입니다.");
+        }
+
+        car1.move();
+        car2.move();
+
+        console.log("\n\n----------리터럴 객체----------");
+
+        //var list = new Object() 라는게 생략이 되어있음. 따라서 new가 없음.
+        var list = {
+            'a': 100,
+            'b': 'hello',
+            'c': function () {
+                console.log('ggg');
+            },
+            'd': function () {
+                console.log("a 호출=> " + this.a);
+            }
+        }
+
+        Object.prototype.sum = function () {
+            console.log(this.a + 20);
+        }
+
+        console.log(list.a);
+        list.c();
+        list.d();
+        console.log("type: " + typeof list);
+        list.sum();
+
+        console.log("\n\n----------콜백 함수----------");
+        //함수 안의 인자를 함수로 받음
+        /*function callbackTest(num, callback){
+            callback(); //콜백 함수를 실행
+            console.log(num);
+        }
+
+        callbackTest(1, function(){
+            console.log('콜백함수가 실행됩니다');
+        })*/
+        
+        //클로저 -> 함수 내에서 변수를 메모리처럼 사용함
+        function ex_closure() {
+            var num = 0;
+            return function(){
+                num++;
+                console.log(num);
+            }
+        }
+
+        var test = ex_closure();
+        test();
+        test();
+    </script>
+</body>
+</html>
