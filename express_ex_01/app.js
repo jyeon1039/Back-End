@@ -30,6 +30,9 @@ app.use(bodyParser.urlencoded({ extended : false }));
     }
 });*/
 
+//express.static => express에서 uploads 파일에서 정적 파일을 추적해달라
+app.use('/uploads', express.static('uploads'));
+
 //이렇게 경로를 설정하면 경로가 많아졌을 때 비효율적임 
 app.get('/', (req, res)=>{
     res.send('hello express');
