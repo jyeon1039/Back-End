@@ -36,19 +36,20 @@ app.use('/uploads', express.static('uploads'));
 //global view variable
 app.use( (req, res, next) => {
     app.locals.isLogin = true; //로그인 되어있음
+    app.locals.req_path = req.path; //현재 url을 보내줌
     next();
 });
 
 // 404 error handling
 // 사용하지 않는 변수는 _로 처리하면 됨
-app.use( ( req , res, _ ) => {
+/*app.use( ( req , res, _ ) => {
     res.status(404).render('common/404.html')
 });
-
+*/
 // 500 error handling
-app.use( (err, req, res,  _ ) => {
+/*app.use( (err, req, res,  _ ) => {
     res.status(500).render('common/500.html')
-});
+});*/
 
 //이렇게 경로를 설정하면 경로가 많아졌을 때 비효율적임 
 app.get('/', (req, res)=>{
