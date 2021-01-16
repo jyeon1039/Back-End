@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="container" style="padding-top:100px;">
-
+        {% if isLogin %}
+            로그인 중
+        {% else %}
+            로그인이 안 되어 있습니다
+        {% endif %}
+        
         {% block content %}{% endblock %} <!-- products.html 의 block 친 부분이 들어감 -->
 
     </div>    
