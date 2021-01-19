@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var dotenv = require('dotenv');
 
-dotenv.config(); //LOAD CONFIG
+dotenv.config(); //dotenv 가져오기
 
 //env의 DB_USER를 가져오기
 //process.env.DB_USER
@@ -25,7 +25,7 @@ let db = [];
 
 fs.readdirSync(__dirname)
     .filter(file => {
-        return file.indexOf('.js')&& file !== 'index.js'
+        return file.indexOf('.js')&& file !== 'index.js'; //index.js 제외하고 나머지 모든 파일들을 참조해서 테이블을 생성하는 부분
     })
     .forEach(file => {
         var model = sequelize.import(path.join(__dirname,
@@ -33,6 +33,7 @@ fs.readdirSync(__dirname)
             db[model.name] = model;
     });
 
+//FK 
 Object.keys(db).forEach(modelName => {
     if("associate" in db[modelName]){
         db[modelName].associate(db);
