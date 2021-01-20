@@ -6,7 +6,6 @@ exports.get_products = ( _ , res) => {
     );*/
 
     models.Products.findAll({
-
     }).then( (productList) => {
         res.render('admin/products.html', { productList : productList});
     });
