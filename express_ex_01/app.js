@@ -70,7 +70,6 @@ class App {
 
     }
 
-
     setStatic (){
         this.app.use('/uploads', express.static('uploads'));
     }
