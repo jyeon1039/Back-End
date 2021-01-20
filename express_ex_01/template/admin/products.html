@@ -13,14 +13,15 @@
         <tr>
             <td>{{ product.name }}</td>
             <td>
-                {{ product.createdAt }}
+                {{ product.dateFormat( product.createdAt ) }}
             </td>
             <td>
                 <a href="#" class="btn btn-danger">삭제</a>
             </td>
         </tr>
+        <% endfor %>
     </table>
-    <% endfor %>
+    
 
     <a href="/admin/products/write" class="btn btn-default">작성하기</a>
 
