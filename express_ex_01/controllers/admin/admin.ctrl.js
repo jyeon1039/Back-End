@@ -6,8 +6,8 @@ exports.get_products = ( _ , res) => {
     );*/
 
     models.Products.findAll({
-    }).then( (productList) => {
-        res.render('admin/products.html', { productList : productList});
+    }).then( (products) => {
+        res.render('admin/products.html', { products : products});
     });
 }
 
@@ -41,11 +41,11 @@ exports.post_products_write = ( req , res ) => {
     });
 }
 
-exports.get_products_detail = (req, res) => {
+exports.get_products_detail = ( req , res ) => {
     models.Products.findByPk(req.params.id).then( (product) => {
-        res.render( 'admin/detail.html', { product });
+        res.render('admin/detail.html', { product: product });  
     });
-}
+}; 
 
 exports.get_products_edit = (req, res) => {
     models.Products.findByPk(req.params.id).then( (product) => {
@@ -54,16 +54,16 @@ exports.get_products_edit = (req, res) => {
 }
 
 //DB 수정
-exports.get_products_edit = (req, res) => {
+exports.post_products_edit = (req, res) => {
     models.Products.update({
         name : req.body.name,
-        price : req.body.price,
+        price : req.body.price ,
         description : req.body.description
     }, {
-        where : { id : req.params.id }
+        where : { id: req.params.id } 
     }).then( () => {
-        res.redirect( '/admin/products/detail' + req.params.id );
-    })
+        res.redirect( '/admin/products/detail/' + req.params.id );
+    });
 }
 
 //DB 삭제
@@ -74,5 +74,5 @@ exports.get_products_delete = (req, res) => {
         }
     }).then( () => {
         res.redirect('/admin/products');
-    })
+    });
 }
