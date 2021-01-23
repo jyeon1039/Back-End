@@ -15,6 +15,10 @@ async function run (){
     const browser = await puppeteer.launch();
     const page = await browser.newPage();  
     
+    // 다이얼로그는 무조건 yes로 하라
+    page.on( "dialog" , (dialog) => {
+        dialog.accept();
+    });
 
     // 웹사이트 로딩
     await page.goto('https://localhost:3000/',
