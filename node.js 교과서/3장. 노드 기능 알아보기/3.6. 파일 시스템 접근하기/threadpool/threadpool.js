@@ -8,6 +8,8 @@
 
 [맥]
 터미널에 UV_THREADPOOL_SIZE = 1
+
+=> 숫자를 크게 할 때는 자신의 컴퓨터 코어 개수와 같거나 많게 두어야 뚜렷한 효과가 발생
 */
 
 const crypto = require('crypto');
