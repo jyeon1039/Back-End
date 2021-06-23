@@ -1,0 +1,32 @@
+1. morgan
+    - 요청과 응답에 대한 정보를 콘솔에 기록
+    - 인수로 dev, combined, common, short, tiny 등을 넣을 수 있음
+    - 보통 개발 환경에서는 dev, 배포 환경에서는 combined 를 사용
+
+2. static
+    - 정적인 파일들을 제공하는 라우터 역할
+    - 인수로 정적 파일들이 담겨 있는 폴더를 지정
+    - 파일을 발견했다면 응답으로 파일을 보내고 next 를 호출하지 않기 때문에 다음 미들웨어는 실행되지 않는다. 
+
+3. body-parser
+    - 요청의 본문에 있는 데이터를 해석해서 req.body 객체로 만들어주는 미들웨어
+    - 보통 폼 데이터난 AJAX 요청의 데이터를 처리
+    - 멀티파트(이미지, 동영상, 파일) 데이터는 처리하지 못 한다. 그 경우에는 multer 모듈을 사용
+    - express 4.16.0 버전부터 body-parser 미들웨어의 일부 기능이 express에 내장되어 있기 때문에 따로 설치할 필요 없지만,
+    raw나 text 같이 버퍼나 텍스트 요청을 처리할 필요가 있다면 body-parser를 설치한 후 다음과 같이 추가해야 함
+        => const bodyParser = require('body-parser');
+           app.use(bodyParser.raw());
+           app.use(bodyParser.text());
+    - extended 옵션
+        - false : querystring 모듈을 사용하여 쿼리스트링 해석
+        - true : qs 모듈을 사용하여 쿼리스트링 해석 (qs 는 npm 패키지이며 querystring 모듈의 기능을 좀 더 확장한 모듈)
+
+4. cookie-parser 
+    - 쿠키를 해석해 req.cookies 객체로 만듦
+    - 첫 번째 인수로 비밀 키를 넣을 수 있다. 서명된 쿠기가 있는 경우, 제공한 비밀 키를 통해 해당 쿠키가 내 서버가 만든
+      쿠키임을 검증할 수 있음
+    - 쿠키는 클라이언트에서 위조하기 쉬우므로 비밀 키를 통해 만들어낸 서명을 쿠키 값 뒤에 붙임
+    - 서명된 쿠키는 req.cookies 대신 req.signedCookies 객체에 들어있음
+    - 쿠키를 생성/제거하기 위해서는 res.cookie, res.clearCookie 메서드를 사용
+      쿠키를 제거하려면, 생성할 때의 키와 값 외에 옵션도 정확히 일치해야한다. 단, expires나 maxAge 옵션은 일치할 필요 없음
+    - 옵션 중에는 

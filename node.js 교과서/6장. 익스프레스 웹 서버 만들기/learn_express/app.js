@@ -1,12 +1,34 @@
 const express = require('express');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const dotenv = require('dotenv');
 const path = require('path');
 
+dotenv.config();        // .env 파일을 읽어서 process.env 로 만듦
 const app = express();
-
-/* 서버가 실행될 포트 설정
-process.env 객체에 PORT 속성이 있다면 그 값ㅇ르 사용하고, 없다면 기본값으로 3000 포트를 이용
-set 으로 설정한 데이터는 key값(ex) port) 을 이용하여 가져올 수 있음 */
 app.set('port', process.env.PORT || 3000);      
+
+/*
+dotenv 제외하고는 다 미들웨어
+설치했던 패키지들을 불러와서 app.use에 연결
+req, res, next 같은 것을은 미들웨어 내부에 들어있음. next도 내부적으로 호출하기에 다음 미들웨어로 넘어갈 수 있음
+*/
+app.use(morgan('dev'));
+app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+    resave: false,
+    saveUnitinitialized: false,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+    },
+    name: 'session-cookie',
+}));
 
 app.use((req, res, next) => {
     console.log('모든 요청에 다 실행됩니다.');
