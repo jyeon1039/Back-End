@@ -1,0 +1,82 @@
+- 모듈 설치 명령어
+    $ npm install [패키지1] [패키지2] [...]
+    $ npm i [패키지1] [패키지2] [...]
+
+- 개발용 패키지 설치 명령어          
+    $ npm install --save-dev [패키지] [...]
+    $ npm i -D [패키지] [...]
+    => devDependencies 속성에서 관리
+
+- 패키지 전역 설치
+    $ npm install --global rimraf  
+    $ npm i -g rimraf                
+    => 패키지를 모든 곳에서 사용한다는 뜻은 아니고, 명령어로 사용하기 위해서
+    => npm이 설치되어 있는 폴더(ex) C:\Users\Owner\AppData\Roaming\npm)에 설치
+    => 전역 설치한 패키지는 package.json 에 기록되지 않음
+
+- 패키지의 알려진 취약점 검사할 수 있는 명령어
+    $npm audit fix
+
+- npm에 등록되지 않은 패키지 설치
+    $ npm install [저장소 주소]
+
+- 업데이트할 수 있는 패키지가 있는지 확인
+    $ npm outdated
+    => Current와 Wanted 가 다르다면 업데이트가 필요한 경우
+
+- 패키지 업데이트  
+    $ npm update [패키지명]
+
+- 패키지 제거
+    $ npm uninstall [패키지명]
+    $ npm rm [패키지명]
+    => node_modules 폴더와 package.json 에서 사라짐
+
+- 패키지 검색
+    $ npm search [검색어]
+    => 윈도우나 맥은 npm 공식 사이트에서 검색하면 편하지만, GUI 가 없는 리눅스에서는 이 명령어를 사용해 콘솔에서 검색
+    => package.json 에 넣어둔 keywords 가 이때 사용됨
+
+- 패키지의 세부 정보 파악
+    $ npm info [패키지명]
+    => package.json 의 내용과 의존 관계, 설치 가능한 버전 정보 등이 표시
+
+- npm 로그인
+    $ npm adduser
+    Username: [사용자 이름 입력]
+    Password: [비밀번호 입력]
+    Email: (this IS public) [이메일 입력]
+    Logged in as [사용자 이름] on https://registry.npmjs.org
+
+    => npm 공식 사이트에서 가입한 계정으로 로그인하면 됨
+    => 나중에 패키지를 배포할 때 로그인이 필요하지만, 패키지를 배포하지 않을 것이라면 npm에 가입할 필요 없음
+
+- 로그인한 사용자가 누구인지
+    $ npm whoami
+    => 로그인된 상태가 아니라면 에러 발생
+
+- adduser로 로그인한 계정 로그아웃
+    $npm logout
+
+- package.json 버전 올리기
+    $ npm version [버전]
+    => najor, minor, patch 라는 문자열을 넣어서 해당 부분의 숫자를 1 올릴 수도 있다.
+    ex) npm version 5.3.2 , npm version minor
+
+- 자신의 패키지를 설치할 때 경고 메시지를 띄우게
+    $ npm deprecate [패키지명] [버전] [메시지]
+    => deprecated 처리를 해두면 다른 사용자들이 버그가 있는 버전의 패키지를 설치할 때 경고 메시지 출력
+
+- 자신이 만든 패키지를 배포
+    $ npm publicsh
+
+- 배포한 패키지를 제거
+    $ npm unpublish
+    => 24시간 이내에 배포한 패키지만 제거 가능
+        => 이유: 다른 사람이 사용하고 있는 패키지를 제거하는 경우를 막기 위해서
+
+- package-lock.json 에 기반하여 패키지 설치
+    $ npm ci
+    => 더 엄격하게 버전을 통제하여 패키지를 설치하고 싶을 때
+
+- 

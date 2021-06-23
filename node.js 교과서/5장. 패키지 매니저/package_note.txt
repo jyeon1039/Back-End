@@ -1,0 +1,35 @@
+[git init]
+- package name : 패키지의 이름 
+    => package.json의 name 속성
+- version : 패키지의 버전
+- entry point : 자바스크립트 실행 파일 진입점. 보통 마지막으로 module.exports를 하는 파일을 지정
+    => package.json의 main 속성
+- test command : 코드를 테스트할 때 입력할 명령어
+    => package.json의 test 속성
+- git repository : 코드를 저장해둔 Git 저장소 주소
+    => package.json의 repository 속성
+- keywords : npm 공식 홈페이지(https://npmjs.com)에서 패키지를 쉽게 찾을 수 있도록 함
+- license : 해당 패키지의 라이선스
+
+[script 속성]
+scripts 속성에 명령어 여러 개를 등록해두고 사용할 수 있다.
+보통 start 명령어에 node [파일명] 을 저장해두고 npm start 로 실행한다. 
+start나 test 같은 스크립트는 run 을 붙이지 않아도 실행된다.
+
+[node_modules 폴더]
+- 설치한 패키지들이 포함됨
+- 이는 Express 가 의조하는 패키지들
+- 패키지 하나가 다른 여러 패키지에 의존하고, 그 패키지들은 또 다른 패키지들에 의존한다.
+  이렇게 의존 관계가 복잡하게 얽혀 있어 package.json 이 필요하다.
+- node_modules 는 언제든지 npm install 로 설치할 수 있으므로 보관할 필요가 없다.
+  Git 같은 버전 관리 프로그램과 같이 사용할 때도 커밋하지 않는다. 중요한 파일은 package.json이다.
+
+[package-lock.json]
+- 직접 설치한 express 외에도 node_modules에 들어 있는 패키지들의 정확한 버전과 의존 관계가 담긴 파일
+- npm으로 패키지를 설치, 수정, 삭제할 때마다 패키지들 간의 내부 의존 관계를 이 파일에 저장
+
+[npx 명렁어]
+- 전역 설치를 하면 package.json 에 기록되지 않는데, 모듈을 package.json의 devDependencies 속성에 기록한 후, 
+  앞에 npx 명령어를 붙여 실행하면 전역 설치한 것과 같은 효과(명령어로 사용 가능)를 얻을 수 있습니다.
+- package.json 에 기록되었으므로 버전 관리가 용이하다
+
