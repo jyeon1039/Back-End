@@ -30,3 +30,29 @@
   - 쿠키를 생성/제거하기 위해서는 res.cookie, res.clearCookie 메서드를 사용
     쿠키를 제거하려면, 생성할 때의 키와 값 외에 옵션도 정확히 일치해야한다. 단, expires나 maxAge 옵션은 일치할 필요 없음
   - 옵션 중에는 signed 라는 옵션이 있는데, 이를 true 로 설정하면 쿠키 뒤에 서명이 붙음
+
+5. express-session
+  - 세션 관리용 미들웨어
+  - 세션을 구현하거나 특정 사용자를 위한 데이터를 임시적으로 저장해둘 때 유용
+  - 세션은 사용자별로 req.session 객체 안에 유지됨
+  - 인수로 세션에 대한 설정
+    - resave : 요청이 올 때 세션에 수정 사항이 생기지 않더라도 세션을 다시 저장할지 설정
+    - saveUninitialized : 세션에 저장할 내역이 없더라도 처음부터 세션을 설정할지
+    - 안전하게 쿠키를 전송하려면 쿠키에 서명을 추가해야 하고, 쿠키를 서명하는 데 secret 의 값이 필요
+      -> cookie-parser 의 secret 과 같게 설정하는 것이 좋음
+    - 세션 쿠키의 이름은 name 옵션으로 설정. default는 connect.signed
+    - cookie : 세션 쿠키에 대한 설정
+  - store 옵션을 사용하면 데이터베이스를 연결하여 세션을 유지할 수 있음. 보통 레디스가 자주 쓰임
+  - req.session.name = 'jihyeon'; //세션 등록
+  - req.sessionID; // 세션 아이디 확인
+  - req.session.destroy(); //세션 모두 제거
+
+  - express-session 에서 서명한 쿠키 앞에는 s: 이 붙음. 실제로는 encodedURIComponent 함수가 실행되어 s%3A가 앞에 붙음
+
+6. 미들웨어 간에 데이터를 전달하는 방법
+  - req.data 사용 
+    => 요청이 끝날 때까지만 데이터를 유지
+    => 새로운 요청이 오면 초기화 됨
+    => 속성명이 꼭 data일 필요는 없지만 달른 미들웨어와 겹치지 않게 조심해야 함 
+      ex) req.body 로 한다면 body-parser 미들웨어와 기능이 겹치게 됨 
+  - 세션을 사용한다면 req.session 객체에 데이터를 넣어도 되지만, 세션이 유지되는 동안에 데이터도 계속 유지된다는 단점 존재
