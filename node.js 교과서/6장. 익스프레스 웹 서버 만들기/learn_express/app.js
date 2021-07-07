@@ -4,8 +4,13 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
 
 dotenv.config();        // .env 파일을 읽어서 process.env 로 만듦
+const indexRouter = require('./routes');
+const userRouter = require('./routes/user');
+
 const app = express();
 app.set('port', process.env.PORT || 3000);      
 
@@ -30,19 +35,18 @@ app.use(session({
     name: 'session-cookie',
 }));
 
+app.use('/', indexRouter);
+app.use('/user', userRouter);
+
 app.use((req, res, next) => {
-    console.log('모든 요청에 다 실행됩니다.');
-    next(); // 다른 미들웨어 작업을 실행하거나, 라우팅 작업을 실행
+  res.status(404).send('Not Found');
 });
 
-app.get('/', (req, res, next) => {
-    console.log('GET / 요청에서만 실행됩니다.');
-    next();
-}, (req, res) => {
-    throw new Error('에러는 에러 처리 미들웨어로 갑니다.')
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send(err.message);
 });
 
-// 에러 처리 미들웨어는 특별한 경우가 아니면 가장 아래에 위치
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).send(err.message);      // HTTP 상태 코드 지정, default는 200(성공)
